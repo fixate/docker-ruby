@@ -81,9 +81,10 @@ RUN set -ex \
 			| xargs -r apk info --installed \
 			| sort -u \
 	)" \
-	&& apk add --virtual .ruby-rundeps $runDeps \
+	&& apk add --no-cache --virtual .ruby-rundeps $runDeps \
 		bzip2 \
 		ca-certificates \
+		git \
 		libffi-dev \
 		openssl-dev \
 		yaml-dev \

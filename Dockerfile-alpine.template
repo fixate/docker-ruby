@@ -88,6 +88,7 @@ RUN set -ex \
 		openssl-dev \
 		yaml-dev \
 		procps \
+		git \
 		zlib-dev \
 	&& apk del .ruby-builddeps \
 	&& cd / \

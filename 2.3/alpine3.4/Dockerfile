@@ -85,12 +85,22 @@ RUN set -ex \
 		bzip2 \
 		ca-certificates \
 		git \
+		libc-dev make \
+		nodejs \
+		postgresql-dev \
+		g++ \
 		libffi-dev \
 		openssl-dev \
 		yaml-dev \
 		procps \
 		zlib-dev \
-	&& apk del .ruby-builddeps \
+	# wkhtmltoimage/pdf
+	&& apk add --no-cache \
+	  libgcc libstdc++ libx11 glib libxrender libxext libintl \
+    libcrypto1.0 libssl1.0 \
+    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family \
+	&& apk add wkhtmltopdf --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ \
+	#&& apk del .ruby-builddeps \
 	&& cd / \
 	&& rm -r /usr/src/ruby \
 	\

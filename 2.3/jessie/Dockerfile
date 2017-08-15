@@ -22,8 +22,14 @@ RUN set -ex \
 		libgdbm-dev \
 		ruby \
 	' \
-	&& apt-get update \
+	# Runs apt-get update
+	&& curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 	&& apt-get install -y --no-install-recommends $buildDeps \
+	&& runDeps=' \
+	nodejs \
+	cron \
+	' \
+	&& apt-get install -y $runDeps \
 	&& rm -rf /var/lib/apt/lists/* \
 	\
 	&& wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" \

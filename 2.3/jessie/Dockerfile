@@ -59,6 +59,12 @@ RUN set -ex \
 	\
 	&& gem update --system "$RUBYGEMS_VERSION"
 
+# Install wkhtmltopdf
+RUN set -ex \
+	&& wget -O /tmp/wkhtmltopdf.tar.xz https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
+	&& tar -C /usr --strip-components=1 -xvf /tmp/wkhtmltopdf.tar.xz wkhtmltox \
+	&& rm /tmp/wkhtmltopdf.tar.xz
+
 ENV BUNDLER_VERSION 1.15.3
 
 RUN gem install bundler --version "$BUNDLER_VERSION"

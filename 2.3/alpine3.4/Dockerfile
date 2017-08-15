@@ -99,7 +99,19 @@ RUN set -ex \
 	  libgcc libstdc++ libx11 glib libxrender libxext libintl \
     libcrypto1.0 libssl1.0 \
     ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family \
+		xvfb fontconfig dbus \
 	&& apk add wkhtmltopdf --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ \
+	# XVFB Wrappers
+	&& echo $'#!/usr/bin/env sh\n\
+Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \n\
+DISPLAY=:0.0 /usr/bin/wkhtmltopdf $@ \n\
+killall Xvfb\
+' > /usr/bin/wkhtmltopdf-wrapped && chmod +x /usr/bin/wkhtmltopdf-wrapped \
+	&& echo $'#!/usr/bin/env sh\n\
+Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \n\
+DISPLAY=:0.0 /usr/bin/wkhtmltoimage $@ \n\
+killall Xvfb\
+' > /usr/bin/wkhtmltoimage-wrapped && chmod +x /usr/bin/wkhtmltoimage-wrapped \
 	#&& apk del .ruby-builddeps \
 	&& cd / \
 	&& rm -r /usr/src/ruby \
